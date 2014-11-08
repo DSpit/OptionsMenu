@@ -79,7 +79,7 @@ class MenuPane extends HBox{															//class MenuPane
 	private void setMenuOptions(){
 		
 		//initialize the main handler for all main menu buttons
-		EventHandler<ActionEvent> handler = new MenuButtonClick();
+		EventHandler<ActionEvent> handler = new MenuButtonClick(); 
 		
 		//iterate through all known button names and create a button for each
 		for(int i = 0; i < ApplicationString.MENU_BUTTON_NAMES.length; ++i){
