@@ -1,12 +1,11 @@
 
 
-
-package com.dspit.options_menu.menu;
+package com.dspit.options_menu.main;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+
+import com.dspit.options_menu.ui.MenuScene;
 
 /**
  * The main UI when the user opens this program. Displays a set of buttons (controls)
@@ -14,7 +13,7 @@ import javafx.stage.Stage;
  * 
  * @author David Boivin (Spit)
  */
-public class Menu extends Application {
+public class MainFrame extends Application{
 	
 	private final String TITLE = "Options Menu";
 
@@ -22,7 +21,7 @@ public class Menu extends Application {
 	public void start(Stage primaryStage) {
 
 		//finish setting up the primary stage
-		primaryStage.setScene(new Scene(new StackPane()));
+		primaryStage.setScene(new MenuScene());
 		primaryStage.setTitle(TITLE);
 		primaryStage.show();
 		
