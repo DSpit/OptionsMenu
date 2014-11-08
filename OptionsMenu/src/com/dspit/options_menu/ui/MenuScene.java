@@ -6,9 +6,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import com.dspit.options_menu.resources.ApplicationColourPalette;
 import com.dspit.options_menu.resources.ApplicationString;
@@ -80,6 +80,8 @@ class MenuPane extends HBox{															//class MenuPane
 		
 		//initialize the main handler for all main menu buttons
 		EventHandler<ActionEvent> handler = new MenuButtonClick(); 
+		//TODO implement listener (figure out where the listener should be defined)
+		//TODO figure out a way to ID each button. (maybe using the Node.setId(String...)/Node.getId())
 		
 		//iterate through all known button names and create a button for each
 		for(int i = 0; i < ApplicationString.MENU_BUTTON_NAMES.length; ++i){

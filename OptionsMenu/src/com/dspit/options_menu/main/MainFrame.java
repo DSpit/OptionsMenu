@@ -24,6 +24,7 @@ public class MainFrame extends Application{
 		primaryStage.setScene(new MenuScene());
 		primaryStage.setTitle(TITLE);
 		primaryStage.show();
+		//TODO add something that prevents the window to be resized to less than the size of the components
 		
 	}
 

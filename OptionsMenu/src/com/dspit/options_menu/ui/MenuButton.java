@@ -53,11 +53,12 @@ class MenuButton extends Button {
 				new BackgroundFill(BACKGROUND, CornerRadii.EMPTY, Insets.EMPTY)));
 		this.setTextFill(FORGROUND);
 		
-		
 		//set text formatting
 		this.setFont(FONT);
 		
 		//set the given handler to the button
 		this.setOnAction(handler);
+		
+		//TODO fix click animation
 	}
 }
