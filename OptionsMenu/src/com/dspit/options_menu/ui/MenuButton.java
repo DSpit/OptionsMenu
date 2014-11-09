@@ -6,6 +6,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -14,20 +16,21 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 import com.dspit.options_menu.resources.ApplicationColourPalette;
-import com.dspit.options_menu.resources.ApplicationFont;
+import com.dspit.options_menu.resources.ApplicationFormatting;
 
 class MenuButton extends Button {
 	
 // Constants --------------------------------------------------------------- //
 	
-	private final int MIN_HEIGHT = 70;
-	private final int MIN_WIDTH = 160;
-	private final double MAX_COEFFICENT = 1.5;
-	private final int MAX_HEIGHT = (int) Math.round(MIN_HEIGHT*MAX_COEFFICENT);
-	private final int MAX_WIDTH = (int) Math.round(MIN_WIDTH*MAX_COEFFICENT);
-	private final Color BACKGROUND = ApplicationColourPalette.ACCENT_BACKGROUND;
-	private final Color FORGROUND = ApplicationColourPalette.ACCENT_FORGROUND;
-	private final Font FONT =  Font.font(ApplicationFont.BUTTON_FONT.getName(), FontWeight.BOLD,  20);
+	private final double MIN_HEIGHT = ApplicationFormatting.MENU_BUTTON_SIZE.getHeight();
+	private final double MIN_WIDTH = ApplicationFormatting.MENU_BUTTON_SIZE.getWidth();
+	private final Background BACKGROUND = new Background( new BackgroundFill(
+			ApplicationColourPalette.COMPONENT_BACKGROUND, CornerRadii.EMPTY, Insets.EMPTY));
+	private final Background BACKGROUND_SELECTED = new Background( new BackgroundFill(
+			ApplicationColourPalette.COMPONENT_BACKGROUND.darker(), CornerRadii.EMPTY, Insets.EMPTY));
+	private final Color FORGROUND = ApplicationColourPalette.COMPONENT_FORGROUND;
+	private final Font FONT =  Font.font(ApplicationFormatting.BUTTON_FONT.getName(), 
+			FontWeight.BOLD,  ApplicationFormatting.MEMU_BUTTON_TEXT_SIZE);
 
 // Constructor ------------------------------------------------------------- //
 	
@@ -42,23 +45,50 @@ class MenuButton extends Button {
 	public MenuButton(String text, EventHandler<ActionEvent> handler){
 		super(text);
 		
-		//set size formatting of the button
-		this.setMinHeight(MIN_HEIGHT);
-		this.setMinWidth(MIN_WIDTH);
-		this.setMaxHeight(MAX_HEIGHT);
-		this.setMaxWidth(MAX_WIDTH);
+		//set size formatting of the button (trust me, this thing shouldn't change size xP)
+		this.setPrefHeight(MIN_HEIGHT);
+		this.setPrefWidth(MIN_WIDTH);
+		this.setMinHeight(Control.USE_PREF_SIZE);
+		this.setMinWidth(Control.USE_PREF_SIZE);
+		this.setMaxHeight(Control.USE_PREF_SIZE);
+		this.setMaxWidth(Control.USE_PREF_SIZE);
 		
 		//set color formatting
-		this.setBackground(new Background(
-				new BackgroundFill(BACKGROUND, CornerRadii.EMPTY, Insets.EMPTY)));
+		this.setBackground(BACKGROUND);
 		this.setTextFill(FORGROUND);
 		
 		//set text formatting
 		this.setFont(FONT);
+		this.setWrapText(true);
 		
 		//set the given handler to the button
 		this.setOnAction(handler);
 		
-		//TODO fix click animation
+		//set visuals for the mouse click on the button (was broken by the setBackground() method.)
+		//To Teacher: If you want me to explain some more just ask me
+		EventHandler<MouseEvent> workaroundHandler = new VisualClickWorkaroundHandler();
+		this.setOnMousePressed(workaroundHandler);
+		this.setOnMouseReleased(workaroundHandler);
+	}
+	
+//Private Listeners -------------------------------------------------------- //
+	
+	private class VisualClickWorkaroundHandler implements EventHandler<MouseEvent>{
+
+		@Override
+		public void handle(MouseEvent e) {
+			
+			//action to perform if the button is pressed
+			if(e.getEventType().equals(MouseEvent.MOUSE_PRESSED)){
+				setBackground(BACKGROUND_SELECTED);
+			}
+			
+			//action to perform if the button is released
+			if(e.getEventType().equals(MouseEvent.MOUSE_RELEASED)){
+				setBackground(BACKGROUND);
+			}
+			
+		}
+		
 	}
 }
