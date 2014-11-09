@@ -11,7 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import com.dspit.options_menu.resources.ApplicationString;
-import com.dspit.options_menu.ui.AbsControlScene;
+import com.dspit.options_menu.ui.AbsSubNavScene;
 import com.dspit.options_menu.ui.FeatureNotImplementedStage;
 import com.dspit.options_menu.ui.MenuScene;
 import com.dspit.sudoku.ui.SudokuScene;
@@ -74,7 +74,7 @@ public class MainFrame extends Application{
 		@Override
 		public void handle(ActionEvent e) {
 			
-			AbsControlScene scene = null;
+			AbsSubNavScene scene = null;
 			
 			switch(((Button)e.getSource()).getId()){
 			case ApplicationString.MENU_OPTION_1:					//case: SUDOKU
