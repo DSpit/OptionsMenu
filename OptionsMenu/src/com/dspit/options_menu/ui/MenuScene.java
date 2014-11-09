@@ -91,8 +91,6 @@ class MenuPane extends HBox{															//class MenuPane
 	 */
 	private void setMenuOptions(EventHandler<ActionEvent> handler){
 		
-		//TODO figure out a way to ID each button. (maybe using the Node.setId(String...)/Node.getId())
-		
 		//iterate through all known button names and create a button for each
 		for(int i = 0; i < ApplicationString.MENU_BUTTON_OPTIONS.length; ++i){
 			
