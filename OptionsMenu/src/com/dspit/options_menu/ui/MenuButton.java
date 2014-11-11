@@ -27,10 +27,9 @@ class MenuButton extends Button {
 	private final Background BACKGROUND = new Background( new BackgroundFill(
 			ApplicationColourPalette.COMPONENT_BACKGROUND, CornerRadii.EMPTY, Insets.EMPTY));
 	private final Background BACKGROUND_SELECTED = new Background( new BackgroundFill(
-			ApplicationColourPalette.COMPONENT_BACKGROUND.darker(), CornerRadii.EMPTY, Insets.EMPTY));
+			ApplicationColourPalette.ACCENT_BACKGROUND, CornerRadii.EMPTY, Insets.EMPTY));
 	private final Color FORGROUND = ApplicationColourPalette.COMPONENT_FORGROUND;
-	private final Font FONT =  Font.font(ApplicationFormatting.BUTTON_FONT.getName(), 
-			FontWeight.BOLD,  ApplicationFormatting.MEMU_BUTTON_TEXT_SIZE);
+	private final Font FONT =  ApplicationFormatting.BUTTON_FONT;
 
 // Constructor ------------------------------------------------------------- //
 	
@@ -87,7 +86,6 @@ class MenuButton extends Button {
 			if(e.getEventType().equals(MouseEvent.MOUSE_RELEASED)){
 				setBackground(BACKGROUND);
 			}
-			
 		}
 		
 	}

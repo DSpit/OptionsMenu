@@ -3,6 +3,7 @@
 package com.dspit.options_menu.main;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -12,7 +13,7 @@ import javafx.stage.Stage;
 
 import com.dspit.options_menu.resources.ApplicationString;
 import com.dspit.options_menu.ui.AbsSubNavScene;
-import com.dspit.options_menu.ui.FeatureNotImplementedStage;
+import com.dspit.options_menu.ui.Popup;
 import com.dspit.options_menu.ui.MenuScene;
 import com.dspit.sudoku.ui.SudokuScene;
 
@@ -28,30 +29,21 @@ public class MainFrame extends Application{
 	
 	private final String TITLE = ApplicationString.APPLICATION_TITLE;
 	
-// Members ---------------------------------------------------------------- //
+// Members ----------------------------------------------------------------- //
 	
-	private Stage mMainStage;
-	private Scene mMenuScene;
+	Stage mMainStage;
+	
+// Override ---------------------------------------------------------------- //
 	
 	@Override
 	public void start(Stage primaryStage) {
 		
-		//initialize a ControlListener, so the application
-		//has the final word on what each menu button does 
-		//and the total possible 
-		
-		ControlHandler controlHandler = new ControlHandler();
-		
 		mMainStage = primaryStage;
-		mMenuScene = new MenuScene(controlHandler);
-		
-		this.setScene(mMenuScene);
-		
 		mMainStage.setTitle(TITLE);
+		
+		this.setMenuScene();
+		
 		mMainStage.show();
-		
-
-		
 	}
 	
 // Private ----------------------------------------------------------------- //
@@ -67,9 +59,13 @@ public class MainFrame extends Application{
 		mMainStage.setWidth(((Pane)scene.getRoot()).getPrefWidth());
 	}
 	
+	private void setMenuScene(){
+		this.setScene(new MenuScene(new ControlHandler()));
+	}
+	
 // Handlers ---------------------------------------------------------------- //
 	
-	public class ControlHandler implements EventHandler<ActionEvent>{
+	private class ControlHandler implements EventHandler<ActionEvent>{
 		
 		@Override
 		public void handle(ActionEvent e) {
@@ -78,7 +74,7 @@ public class MainFrame extends Application{
 			
 			switch(((Button)e.getSource()).getId()){
 			case ApplicationString.MENU_OPTION_1:					//case: SUDOKU
-				scene = new SudokuScene(mMenuScene);
+				//scene = new SudokuScene(new HomeHandler());
 				break;
 				
 			case ApplicationString.MENU_OPTION_2:					//case: TBA
@@ -89,21 +85,33 @@ public class MainFrame extends Application{
 				
 			case ApplicationString.MENU_OPTION_4:					//case: TBA
 				//Not implemented
-				new FeatureNotImplementedStage();
+				new Popup(ApplicationString.NOT_IMPLEMENTED_MESSAGE);
 				break;
 			
 			case ApplicationString.MENU_OPTION_EXIT: 				//case: EXIT
-				try {			//closes the application
-					stop();
-				} catch (Exception e1) {
-					//don't see why this would happen (or matter)
-				}
+					//free up space and close the application
+					mMainStage.close();
+					mMainStage = null;
 				break;
 			}
 			
-			setScene(scene);			
+			//make sure that the not implemented Popup stage does
+			//change the current stage
+			if(scene != null){
+				setScene(scene);
+			}
 		}
 	}
+	
+	private class HomeHandler implements EventHandler<ActionEvent>{
+
+		@Override
+		public void handle(ActionEvent e){
+			//returns the window back to 
+			setMenuScene();
+		}
+		
+	} 
 	
 // MAIN -------------------------------------------------------------------- //
 

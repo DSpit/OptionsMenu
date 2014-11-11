@@ -1,12 +1,13 @@
 package com.dspit.sudoku.ui;
 
-import com.dspit.options_menu.ui.AbsSubNavScene;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 
-import javafx.scene.Scene;
+import com.dspit.options_menu.ui.AbsSubNavScene;
 
 public class SudokuScene extends AbsSubNavScene {
 
-	public SudokuScene(Scene M) {
+	public SudokuScene(EventHandler<ActionEvent> homeHandler) {
 		super(null);
 		// TODO Auto-generated constructor stub
 	}
