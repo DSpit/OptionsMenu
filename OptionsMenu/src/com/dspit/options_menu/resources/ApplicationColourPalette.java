@@ -17,7 +17,5 @@ public interface ApplicationColourPalette {
 	public static final Color COMPONENT_FORGROUND = Color.web("#FFFFFF");
 	public static final Color ACCENT_BACKGROUND = Color.web("#FFBB33");
 	public static final Color ACCENT_FORGROUND = Color.web("#FFFFFF");
-	public static final Color POPUP_BACKGROUND = Color.web("#474646");
-	public static final Color POPUP_FORGROUND = Color.web("#FFFFFF");
 	
 }

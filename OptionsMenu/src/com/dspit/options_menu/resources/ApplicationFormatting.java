@@ -17,7 +17,6 @@ import javafx.scene.text.FontWeight;
 public interface ApplicationFormatting {
 	
 	public static final int MENU_BUTTON_TEXT_SIZE = 20;
-	public static final int POPUP_FONT_TEXT_SIZE = 16;
 	public static final int MENU_SPACING = 15;
 	public static final Dimension MENU_BUTTON_SIZE = new Dimension(160, 70);
 	public static final Insets WINDOW_PADDING = new Insets(50,50,50,50);
@@ -27,7 +26,4 @@ public interface ApplicationFormatting {
 	public static final Font BUTTON_FONT = Font.font(APPLICATION_FONT_NAME,
 												FontWeight.BOLD, 
 												MENU_BUTTON_TEXT_SIZE);
-	public static final Font POPUP_FONT = Font.font(APPLICATION_FONT_NAME,
-												FontWeight.BOLD,
-												POPUP_FONT_TEXT_SIZE);
 }
