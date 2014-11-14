@@ -37,13 +37,16 @@ import com.dspit.options_menu.resources.ApplicationString;
  * @author David Boivin (Spit)
  */
 public abstract class AbsSubNavScene extends Scene {
-
-// Constants --------------------------------------------------------------- //
-	
-	
 	
 // Constructors ------------------------------------------------------------ //
 	
+	/**
+	 * Constructor which builds the container pane with no pane inside the wrapper
+	 * pane.
+	 * 
+	 * @param controller The Navigation control handler
+	 * @param header The main title which will be seen on the header
+	 */
 	public AbsSubNavScene(EventHandler<ActionEvent> controller, String header){
 		super(new VBox());
 		
@@ -59,6 +62,13 @@ public abstract class AbsSubNavScene extends Scene {
 		this.setSizing();
 	}
 	
+	/**
+	 * Constructor which builds a container pane with the given mainPane 
+	 * placed inside the wrapper pane. see {@link #AbsSubNavScene(EventHandler, String)} 
+	 * for more info.
+	 * 
+	 * @param mainPane The main pane which this navigation wrapper is made for.
+	 */
 	public AbsSubNavScene(EventHandler<ActionEvent> controller, String header, Pane mainPane){
 		this(controller, header);
 		
@@ -91,6 +101,9 @@ public abstract class AbsSubNavScene extends Scene {
 	
 // Private Methods --------------------------------------------------------- //
 	
+	/**
+	 * Properly sets the minimum size and the actual size
+	 */
 	private void setSizing(){
 		Pane root = (Pane)this.getRoot();	//convenience
 		
