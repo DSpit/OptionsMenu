@@ -3,7 +3,6 @@
 package com.dspit.options_menu.main;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -13,8 +12,8 @@ import javafx.stage.Stage;
 
 import com.dspit.options_menu.resources.ApplicationString;
 import com.dspit.options_menu.ui.AbsSubNavScene;
-import com.dspit.options_menu.ui.Popup;
 import com.dspit.options_menu.ui.MenuScene;
+import com.dspit.options_menu.ui.Popup;
 import com.dspit.sudoku.ui.SudokuScene;
 
 /**
@@ -46,6 +45,13 @@ public class MainFrame extends Application{
 		mMainStage.show();
 	}
 	
+	@Override
+	public void stop(){
+		//free up space and close the application
+		mMainStage.close();
+		mMainStage = null;
+	}
+	
 // Private ----------------------------------------------------------------- //
 	
 	private void setScene(Scene scene){
@@ -60,7 +66,8 @@ public class MainFrame extends Application{
 	}
 	
 	private void setMenuScene(){
-		this.setScene(new MenuScene(new ControlHandler()));
+		this.setScene(new MenuScene(new ControlHandler(), 
+				ApplicationString.MENU_BUTTON_OPTIONS));
 	}
 	
 // Handlers ---------------------------------------------------------------- //
@@ -73,33 +80,28 @@ public class MainFrame extends Application{
 			AbsSubNavScene scene = null;
 			
 			switch(((Button)e.getSource()).getId()){
-			case ApplicationString.MENU_OPTION_1:					//case: SUDOKU
-				//scene = new SudokuScene(new HomeHandler());
+			case ApplicationString.NAV_OPTION_1:					//case: SUDOKU
+				scene = new SudokuScene(new HomeHandler());
 				break;
 				
-			case ApplicationString.MENU_OPTION_2:					//case: TBA
+			case ApplicationString.NAV_OPTION_2:					//case: TBA
 				//Not implemented
 				
-			case ApplicationString.MENU_OPTION_3: 					//case: TBA
+			case ApplicationString.NAV_OPTION_3: 					//case: TBA
 				//Not implemented
 				
-			case ApplicationString.MENU_OPTION_4:					//case: TBA
+			case ApplicationString.NAV_OPTION_4:					//case: TBA
 				//Not implemented
 				new Popup(ApplicationString.NOT_IMPLEMENTED_MESSAGE);
-				break;
+				return;	//so that the final scene isn't output as null
 			
-			case ApplicationString.MENU_OPTION_EXIT: 				//case: EXIT
-					//free up space and close the application
-					mMainStage.close();
-					mMainStage = null;
+			case ApplicationString.NAV_OPTION_EXIT: 				//case: EXIT
+				stop();	//closes application
 				break;
 			}
 			
-			//make sure that the not implemented Popup stage does
-			//change the current stage
-			if(scene != null){
-				setScene(scene);
-			}
+			//changes the scene of the stage
+			setScene(scene);
 		}
 	}
 	
@@ -107,8 +109,16 @@ public class MainFrame extends Application{
 
 		@Override
 		public void handle(ActionEvent e){
-			//returns the window back to 
-			setMenuScene();
+			
+			switch(((Button)e.getSource()).getId()){
+			case ApplicationString.NAV_OPTION_HOME:
+				setMenuScene();
+				break;
+				
+			case ApplicationString.NAV_OPTION_EXIT:
+				stop();		//closes application
+				break;	
+			}
 		}
 		
 	} 
