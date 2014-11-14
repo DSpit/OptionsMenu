@@ -95,7 +95,7 @@ public class MenuScene extends Scene {														//class MenuScene
 		
 	// Constants --------------------------------------------------------------- //
 		
-		private final double SPACING = ApplicationFormatting.MENU_SPACING;
+		private final double SPACING = ApplicationFormatting.SPACING;
 		private final Color BACKGROUND = ApplicationColourPalette.BACKGROUND;
 		
 	// Constructors ------------------------------------------------------------ //
@@ -107,7 +107,7 @@ public class MenuScene extends Scene {														//class MenuScene
 		 */
 		public MenuPane(int buttonCount){
 			super();
-			
+			//TODO fix the resizing issue
 			//sets wanted formatting
 			this.setAlignment(Pos.CENTER);
 			this.setBackground(new Background(
@@ -121,7 +121,7 @@ public class MenuScene extends Scene {														//class MenuScene
 			
 			this.setPrefWidth(buttonCount*(											//Dynamic way of setting the width.
 					ApplicationFormatting.MENU_BUTTON_SIZE.getWidth()+				//Algorithm: NumberOfCol*(ComponentWidth + Spacing) +
-					ApplicationFormatting.MENU_SPACING) + 							//LeftPadding + RightPadding = totalWidth
+					ApplicationFormatting.SPACING) + 							//LeftPadding + RightPadding = totalWidth
 					ApplicationFormatting.WINDOW_PADDING.getLeft() +
 					ApplicationFormatting.WINDOW_PADDING.getRight());
 			this.setMinHeight(Pane.USE_PREF_SIZE);

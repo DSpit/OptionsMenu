@@ -40,9 +40,9 @@ public class MainFrame extends Application{
 		mMainStage = primaryStage;
 		mMainStage.setTitle(TITLE);
 		
-		this.setMenuScene();
-		
 		mMainStage.show();
+		
+		this.setMenuScene();
 	}
 	
 	@Override
@@ -58,11 +58,20 @@ public class MainFrame extends Application{
 		//set the scene to the main stage
 		mMainStage.setScene(scene);
 		
-		//makes sure that the stage is the right size for the scene
-		mMainStage.setMinHeight(((Pane)scene.getRoot()).getPrefHeight());
-		mMainStage.setMinWidth(((Pane)scene.getRoot()).getPrefWidth());
-		mMainStage.setHeight(((Pane)scene.getRoot()).getPrefHeight());
-		mMainStage.setWidth(((Pane)scene.getRoot()).getPrefWidth());
+		System.out.println("Height: " + ((Pane)scene.getRoot()).getHeight());
+		System.out.println("Width: " + ((Pane)scene.getRoot()).getWidth());
+		
+		//TODO fix the resizing issue
+		mMainStage.setMinHeight(((Pane)scene.getRoot()).getHeight());
+		mMainStage.setMinWidth(((Pane)scene.getRoot()).getWidth());
+		mMainStage.setHeight(((Pane)scene.getRoot()).getHeight());
+		mMainStage.setWidth(((Pane)scene.getRoot()).getWidth());
+		
+//		//makes sure that the stage is the right size for the scene
+//		mMainStage.setMinHeight(((Pane)scene.getRoot()).getPrefHeight());
+//		mMainStage.setMinWidth(((Pane)scene.getRoot()).getPrefWidth());
+//		mMainStage.setHeight(((Pane)scene.getRoot()).getPrefHeight());
+//		mMainStage.setWidth(((Pane)scene.getRoot()).getPrefWidth());
 	}
 	
 	private void setMenuScene(){

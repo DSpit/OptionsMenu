@@ -18,6 +18,8 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -39,23 +41,22 @@ public abstract class AbsSubNavScene extends Scene {
 // Constants --------------------------------------------------------------- //
 	
 	
-// Members ----------------------------------------------------------------- //
-	
-	private boolean mIsFull;
 	
 // Constructors ------------------------------------------------------------ //
 	
 	public AbsSubNavScene(EventHandler<ActionEvent> controller, String header){
 		super(new VBox());
 		
-		//convenience
-		VBox mainContainer = (VBox)this.getRoot();
+		HeaderPane masthead = new HeaderPane(header, controller);
+		ContentWrapper wrapper = new ContentWrapper();
 		
-		mainContainer.getChildren().add(new HeaderPane(header, controller));
+		masthead.minWidthProperty().bind(this.widthProperty());
 		
-		//TODO set proper sizing
+		wrapper.minWidthProperty().bind(this.widthProperty());
+		wrapper.minHeightProperty().bind(this.heightProperty().subtract(masthead.getHeight()));
+		((VBox)this.getRoot()).getChildren().addAll(masthead, wrapper);
 		
-		mIsFull = false;
+		this.setSizing();
 	}
 	
 	public AbsSubNavScene(EventHandler<ActionEvent> controller, String header, Pane mainPane){
@@ -66,22 +67,40 @@ public abstract class AbsSubNavScene extends Scene {
 	
 // Protected Methods ------------------------------------------------------- //
 	
+	/**
+	 * Assigns the new main pane to the wrapper of this scene.
+	 * <br><br><b>NOTE: </b>This method will remove any current main pane
+	 * which is stored within the content wrapper.
+	 * 
+	 * @param mainPane
+	 */
 	protected void setMainPane(Pane mainPane){
+		ContentWrapper wrapper;
 		
-		if(mIsFull){
-			
-			for(Node n : ((Pane)this.getRoot()).getChildren()){
-				if(!(n instanceof HeaderPane)){
-					((Pane)this.getRoot()).getChildren().remove(n);
-				}
+		//find the content wrapper
+		for(Node n : ((Pane)this.getRoot()).getChildren()){
+			if(n instanceof ContentWrapper){
+				
+				//sets the new main pane
+				wrapper = (ContentWrapper)n;
+				wrapper.populate(mainPane);
+				this.setSizing();
 			}
-			
-			mIsFull = false;
 		}
+	}
+	
+// Private Methods --------------------------------------------------------- //
+	
+	private void setSizing(){
+		Pane root = (Pane)this.getRoot();	//convenience
 		
-		((Pane)this.getRoot()).getChildren().add(new ContinerWrapper(mainPane));
-		
-		mIsFull = true;
+		//TODO fix sizing issue
+		System.out.println("height: " + root.getHeight());
+		System.out.println("Width: " + root.getWidth());
+		root.setPrefHeight(root.getHeight());
+		root.setPrefWidth(root.getWidth());
+		root.setMinHeight(Pane.USE_PREF_SIZE);
+		root.setMinWidth(Pane.USE_PREF_SIZE);
 	}
 	
 // Private Inner Classes --------------------------------------------------- //
@@ -101,11 +120,9 @@ public abstract class AbsSubNavScene extends Scene {
 				new BackgroundFill(ApplicationColourPalette.ACCENT_BACKGROUND,
 									CornerRadii.EMPTY, Insets.EMPTY));
 		private Color FORGROUND = ApplicationColourPalette.ACCENT_FORGROUND;
-		private Insets PADDING = new Insets(ApplicationFormatting.WINDOW_PADDING.getTop(),
-										ApplicationFormatting.WINDOW_PADDING.getRight(),
-										20,
-										ApplicationFormatting.WINDOW_PADDING.getLeft());
+		private Insets PADDING = ApplicationFormatting.HEADER_PADDING;
 		private int COMPONENT_HEIGHT = ApplicationFormatting.HEADER_COMPONENT_HEIGHT;
+		private int SPACING = ApplicationFormatting.SPACING;
 		
 	//Constructors --------------------------------------------------------- //
 		
@@ -122,6 +139,7 @@ public abstract class AbsSubNavScene extends Scene {
 			//set the background to the header
 			this.setBackground(BACKGROUND);
 			this.setPadding(PADDING);
+			this.setSpacing(SPACING);
 			
 			//create header label and set the proper formatting to it.
 			Label headerText = new Label(title);
@@ -137,8 +155,12 @@ public abstract class AbsSubNavScene extends Scene {
 			ImageView exitImage = new ImageView(new Image("com/dspit/options_menu/resources/1-navigation-cancel.png", 0, COMPONENT_HEIGHT, true, false));
 			Button exit = new HeaderButton(exitImage, ApplicationString.NAV_OPTION_EXIT, controller);
 			
+			//sets the filler region
+			Region filler = new Region();
+			HBox.setHgrow(filler, Priority.ALWAYS);
+			
 			//add components to pane
-			this.getChildren().addAll(headerText, home, exit);
+			this.getChildren().addAll(headerText, filler, home, exit);
 			
 			this.setFillHeight(false);
 		}
@@ -183,8 +205,63 @@ public abstract class AbsSubNavScene extends Scene {
 		}
 	}
 	
+	/**
+	 * A wrapper for the main pane, whatever it is. This is used to
+	 * set the background colour and the proper padding regardless
+	 * of that the given pane is.
+	 * 
+	 * @author David Boivin (Spit)
+	 */
 	private class ContentWrapper extends StackPane{
-		//TODO finish writing wrapper
+		
+	// Constants ----------------------------------------------------------- //
+		
+		private final Background BACKGROUND = new Background(
+				new BackgroundFill(ApplicationColourPalette.BACKGROUND,
+						CornerRadii.EMPTY, Insets.EMPTY));
+		private final Insets PADDING = new Insets(30,
+											ApplicationFormatting.WINDOW_PADDING.getRight(),
+											ApplicationFormatting.WINDOW_PADDING.getBottom(),
+											ApplicationFormatting.WINDOW_PADDING.getLeft());
+		
+	// Constructors -------------------------------------------------------- //
+		
+		/**
+		 * Doesn't set the main pane because non is given. Should be filled later
+		 * using {@link #populate(Pane)}.
+		 */
+		public ContentWrapper(){
+			super();
+			
+			//formatting
+			this.setBackground(BACKGROUND);
+			this.setPadding(PADDING);
+		}
+		
+	//Public methods ------------------------------------------------------- //
+		
+		/**
+		 * Sets the new main pane which fits in the wrapper.
+		 * <br><br><b>NOTE: </b>This method will remove whatever is
+		 * held within this wrapper using {@link #depopulate()}before setting the pane.
+		 * 
+		 * @param mainPane The new main panel
+		 */
+		public void populate(Pane mainPane){
+			
+			if(!this.getChildren().isEmpty()){
+				this.depopulate();
+			}
+			
+			this.getChildren().add(mainPane);
+		}
+		
+		/**
+		 * Removes all children Nodes in the Wrapper.
+		 */
+		public void depopulate(){
+			this.getChildren().removeAll();
+		}
 	}
 }
  
