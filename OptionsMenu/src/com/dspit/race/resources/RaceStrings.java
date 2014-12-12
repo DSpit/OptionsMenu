@@ -17,6 +17,7 @@ public interface RaceStrings {
 	public static final String ID_WHEEL = "wheel";
 	
 	public static final String START_SOUND = "race-start.mp3";
+	public static final String IMAGE_CAR = "car.png";
 	
 	public static final String START_BUTTON = "Start!";
 	public static final String LEADERBOARD_TITLE = "LEADERBOARD";

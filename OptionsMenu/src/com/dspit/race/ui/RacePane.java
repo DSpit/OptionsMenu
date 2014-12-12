@@ -6,13 +6,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import com.dspit.nav.Navigatable.NavNode;
 import com.dspit.race.resources.RaceStrings;
-import com.dspit.sudoku.resources.SudokuStrings;
 
 public class RacePane extends HBox implements NavNode{
 	
@@ -49,7 +47,8 @@ public class RacePane extends HBox implements NavNode{
 		ControlPane control = new ControlPane();
 		
 		for(int i = 0; i < NUM_CARS; ++i){
-			mTrack.add(new Car());
+			Car c = new Car(i+1);
+			mTrack.add(c);
 		}
 		
 		this.getChildren().addAll(control, mTrack);

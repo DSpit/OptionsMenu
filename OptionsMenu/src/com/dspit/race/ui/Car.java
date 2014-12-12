@@ -27,7 +27,7 @@ public class Car extends StackPane{
 	/**
 	 * Builds a car object.
 	 */
-	public Car(){
+	public Car(int num){
 		super();
 		
 		this.getStylesheets().add(RaceStrings.class.getResource(
@@ -38,7 +38,7 @@ public class Car extends StackPane{
 		Random r = new Random();
 		mSpeed = (5*((5+r.nextInt(10))/10.0));
 		
-		mNum = (int)Math.round(Math.random()*10);
+		mNum = num;
 		
 		mColor = COLORS[r.nextInt(COLORS.length)];
 		

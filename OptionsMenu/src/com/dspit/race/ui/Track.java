@@ -15,7 +15,6 @@ import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 
 import com.dspit.race.resources.RaceStrings;
-import com.dspit.sudoku.resources.SudokuStrings;
 
 public class Track extends StackPane{
 	
@@ -40,8 +39,9 @@ public class Track extends StackPane{
 		
 		mCars = new Car[numCars];
 		mCurrentTotalCars = 0;
-		
+		this.placeCars();
 		this.getChildren().add(this.buildBase());
+
 	}
 	
 // Public Methods ---------------------------------------------------------- //
@@ -66,9 +66,6 @@ public class Track extends StackPane{
 	 */
 	public String[] startRace(){
 		
-		//place cars in correct location
-		this.placeCars();
-		
 		//setup audio
 		AudioClip startingSound = new AudioClip(RaceStrings.class.getResource(
 				RaceStrings.START_SOUND)
@@ -86,7 +83,7 @@ public class Track extends StackPane{
 			
 			transitionHolder[i].setDelay(Duration.seconds(
 					(startingSound.getPan()*2)));
-			transitionHolder[i].setToX(this.getWidth() - 
+			transitionHolder[i].setToX(850 - 
 					STOPPING_DISTANCE);
 			transitionHolder[i].setOnFinished(aHandler);
 		}
