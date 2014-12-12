@@ -2,19 +2,21 @@
 
 package com.dspit.options_menu.main;
 
+import java.util.ArrayList;
+
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
+import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import com.dspit.fx.nav.SideTab;
+import com.dspit.fx.nav.TestNode;
+import com.dspit.nav.Navigatable.NavNode;
 import com.dspit.options_menu.resources.ApplicationString;
-import com.dspit.options_menu.ui.AbsSubNavScene;
-import com.dspit.options_menu.ui.MenuScene;
-import com.dspit.options_menu.ui.Popup;
-import com.dspit.sudoku.ui.SudokuScene;
+import com.dspit.race.resources.RaceStrings;
+import com.dspit.race.ui.RacePane;
+import com.dspit.sudoku.resources.SudokuStrings;
+import com.dspit.sudoku.ui.SudokuPane;
 
 /**
  * The main UI when the user opens this program. Displays a set of buttons (controls)
@@ -28,109 +30,73 @@ public class MainFrame extends Application{
 	
 	private final String TITLE = ApplicationString.APPLICATION_TITLE;
 	
-// Members ----------------------------------------------------------------- //
-	
-	Stage mMainStage;
-	
 // Override ---------------------------------------------------------------- //
 	
 	@Override
 	public void start(Stage primaryStage) {
 		
-		mMainStage = primaryStage;
-		mMainStage.setTitle(TITLE);
+		ArrayList<NavNode> contentList = new ArrayList<NavNode>();
 		
-		mMainStage.show();
+		contentList.add(new SudokuPane("Sudoku Game", 
+				SudokuStrings.class.getResource("game_icon.png").toString()));
+		contentList.add(new RacePane("Race Day", 
+				RaceStrings.class.getResource("race_icon.png").toString()));
+		contentList.add(new TestNode("Unimplemented 3", "green"));
+		contentList.add(new TestNode("Unimplemented 4", "red"));
 		
-		this.setMenuScene();
+		IntroPane home = new IntroPane();
+		
+		primaryStage.setScene(new SideTab(home, contentList));
+		primaryStage.setTitle(TITLE);
+		
+		primaryStage.show();
+		
 	}
 	
-	@Override
-	public void stop(){
-		//free up space and close the application
-		mMainStage.close();
-		mMainStage = null;
-	}
+// Private Inner Class ----------------------------------------------------- //
 	
-// Private ----------------------------------------------------------------- //
-	
-	private void setScene(Scene scene){
-		//set the scene to the main stage
-		mMainStage.setScene(scene);
-		
-		System.out.println("Height: " + ((Pane)scene.getRoot()).getHeight());
-		System.out.println("Width: " + ((Pane)scene.getRoot()).getWidth());
-		
-		//TODO fix the resizing issue
-		mMainStage.setMinHeight(((Pane)scene.getRoot()).getHeight());
-		mMainStage.setMinWidth(((Pane)scene.getRoot()).getWidth());
-		mMainStage.setHeight(((Pane)scene.getRoot()).getHeight());
-		mMainStage.setWidth(((Pane)scene.getRoot()).getWidth());
-		
-//		//makes sure that the stage is the right size for the scene
-//		mMainStage.setMinHeight(((Pane)scene.getRoot()).getPrefHeight());
-//		mMainStage.setMinWidth(((Pane)scene.getRoot()).getPrefWidth());
-//		mMainStage.setHeight(((Pane)scene.getRoot()).getPrefHeight());
-//		mMainStage.setWidth(((Pane)scene.getRoot()).getPrefWidth());
-	}
-	
-	private void setMenuScene(){
-		this.setScene(new MenuScene(new ControlHandler(), 
-				ApplicationString.MENU_BUTTON_OPTIONS));
-	}
-	
-// Handlers ---------------------------------------------------------------- //
-	
-	private class ControlHandler implements EventHandler<ActionEvent>{
+	private class IntroPane extends StackPane implements NavNode{
+
+		public IntroPane(){
+			super();
+			
+			this.setStyle("-fx-background-color: #F0F0F0;");
+			
+			Label l = new Label(ApplicationString.INTRO_MESSAGE);
+			
+			l.setStyle("-fx-font-size: 16pt;" + 
+					"-fx-font-weight: bold;");
+			
+			this.getChildren().add(l);
+		}
 		
 		@Override
-		public void handle(ActionEvent e) {
-			
-			AbsSubNavScene scene = null;
-			
-			switch(((Button)e.getSource()).getId()){
-			case ApplicationString.NAV_OPTION_1:					//case: SUDOKU
-				scene = new SudokuScene(new HomeHandler());
-				break;
-				
-			case ApplicationString.NAV_OPTION_2:					//case: TBA
-				//Not implemented
-				
-			case ApplicationString.NAV_OPTION_3: 					//case: TBA
-				//Not implemented
-				
-			case ApplicationString.NAV_OPTION_4:					//case: TBA
-				//Not implemented
-				new Popup(ApplicationString.NOT_IMPLEMENTED_MESSAGE);
-				return;	//so that the final scene isn't output as null
-			
-			case ApplicationString.NAV_OPTION_EXIT: 				//case: EXIT
-				stop();	//closes application
-				break;
-			}
-			
-			//changes the scene of the stage
-			setScene(scene);
+		public String getTitle() {
+			return "Home";
 		}
-	}
-	
-	private class HomeHandler implements EventHandler<ActionEvent>{
 
 		@Override
-		public void handle(ActionEvent e){
-			
-			switch(((Button)e.getSource()).getId()){
-			case ApplicationString.NAV_OPTION_HOME:
-				setMenuScene();
-				break;
-				
-			case ApplicationString.NAV_OPTION_EXIT:
-				stop();		//closes application
-				break;	
-			}
+		public String getIcon(){
+			return ApplicationString.HOME_ICON;
+		}
+
+		/**
+		 * Ain't gonna work cause these are constants
+		 */
+		@Override
+		public void setTitle(String title) {
+			//don't need to do this
+		}
+
+		/**
+		 * Ain't gonna work cause these are constants
+		 */
+		@Override
+		public void setIcon(String iconImage) {
+			//don't need to do this
 		}
 		
-	} 
+	}
 	
 // MAIN -------------------------------------------------------------------- //
 

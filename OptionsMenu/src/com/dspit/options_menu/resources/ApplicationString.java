@@ -12,19 +12,13 @@ public interface ApplicationString {
 	
 	public static final String APPLICATION_TITLE = "Options Menu";
 	
-	public static final String NAV_OPTION_1 = "Sudoku";
-	public static final String NAV_OPTION_2 = "TBA1";
-	public static final String NAV_OPTION_3 = "TBA2";
-	public static final String NAV_OPTION_4 = "TBA3";
-	public static final String NAV_OPTION_EXIT = "Exit";
-	public static final String NAV_OPTION_HOME = "Home";
+	public static final String INTRO_MESSAGE = 
+			"This is where the options screen "
+					+ "to select what part of the program would have gone if I \r"
+					+ "hadn't invested WAY too much time into making the navigation"
+					+ "wrapper scheme thing. \rHope you don't feel compelled to deduct marks for my"
+					+ "extra effort and ultimatly laziness. \rHappy Holidays!";
 	
-	public static final String[] MENU_BUTTON_OPTIONS = {NAV_OPTION_1,
-														NAV_OPTION_2,
-														NAV_OPTION_3,
-														NAV_OPTION_4,
-														NAV_OPTION_EXIT};
-	
-	public static final String NOT_IMPLEMENTED_MESSAGE = "This choice will be implemented soon";
-	public static final String NOT_IMPLEMENTED_TITLE = "Feature Not Implemented";
+	public static final String BASE_RES_PATH = "com/dspit/options_menu/resources/";
+	public static final String HOME_ICON = BASE_RES_PATH + "home_icon.png";
 }

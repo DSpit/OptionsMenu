@@ -1,0 +1,100 @@
+
+
+.root{
+	-fx-background-color: #333333;
+}
+
+.sudoku-grid{
+	-fx-min-width: 500px;
+	-fx-min-height: 500px;
+	-fx-alignment: center;
+	-fx-border-width: 3px;
+	-fx-border-color: black;
+	-fx-background-color: #FF6600;
+}
+
+.sudoku-grid .label{
+	-fx-alignment: center;
+	-fx-font-size: 16pt;
+}
+
+.sudoku-grid .sub-grid{
+	-fx-border-width:2px;
+	-fx-border-color: black;
+}
+
+#grid-container {
+	-fx-hgap: 20px;
+	-fx-background-color: #999999;
+	
+	-fx-alignment: center;
+	-fx-padding: 30px; 
+	-fx-effect: dropshadow(one-pass-box, black, 10, 0, 0, 0) ;
+}
+
+#grid-container .label{
+	-fx-font-size: 16px;
+	-fx-font-weight: bold;
+}
+
+#empty-pane{
+	-fx-min-height: 500px;
+	-fx-min-width: 500px;
+	
+	-fx-background-color: #333333;
+	-fx-border-width: 2px;
+}
+
+#sudoku-grid{
+	-fx-min-height: 500px;
+	-fx-min-width: 500px;
+	-fx-border-width: 4px;
+}
+
+#empty-pane .label{
+	-fx-text-fill: #FFFFFF;
+}
+
+#control-container {
+	-fx-background-color: #333333;
+	-fx-alignment: center;
+	-fx-padding: 20px;
+}
+
+.button:selected{
+	-fx-background-color: derive(#FF6600, 100%);
+}
+
+
+.button{
+	-fx-background-color: #FF6600;
+	-fx-pref-height: 50px;
+	-fx-pref-width: 100px;
+	-fx-background-radius: 90px;
+	-fx-font-weight: bold;
+	-fx-font-size: 14pt;
+}
+
+
+.line {
+	-fx-stroke-width: 4px;
+	-fx-stroke: darkred;
+}
+
+#cell{
+	-fx-background-color: #FFFFFF;
+	-fx-min-height: 51px;
+	-fx-min-width: 51px;
+	-fx-border-color: black;
+	-fx-border-width: 1px;
+}
+
+#hint{
+	-fx-background-color: #FFFFFF;
+	-fx-text-fill: red;
+	-fx-min-height: 51px;
+	-fx-min-width: 51px;
+	-fx-border-color: black;
+	-fx-border-width: 1px;
+}
+

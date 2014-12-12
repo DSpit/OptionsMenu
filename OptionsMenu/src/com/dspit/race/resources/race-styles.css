@@ -1,0 +1,62 @@
+
+
+#control{
+	-fx-background-color:  #666666;
+	-fx-pref-height: 1500px;
+	
+	-fx-spacing: 70px;
+	-fx-alignment: center;
+	-fx-padding: 20px;
+}
+
+#l-container{
+	-fx-pref-height: 500px;
+	-fx-pref-width: 200px;
+	
+	-fx-alignment: top-center ;
+	-fx-background-color: #333333;
+}
+
+#l-container .label{
+	-fx-text-fill: #FFFFFF;
+	-fx-font-weight: bold;
+	-fx-font-size: 12pt;
+}
+
+#track{
+	-fx-border-color: black;
+	-fx-border-width: 3px;
+	
+	-fx-background-color: #F5F5F5;
+}
+
+#track #t-container{
+	-fx-pref-width: 850px;
+}
+
+#track #start{
+	-fx-background-color:  #FF6600;
+	-fx-alignment: center;
+	-fx-font-size: 14pt;
+	-fx-font-weight: bold;
+	-fx-text-fill: #FFFFFF;
+	-fx-pref-width: 150px;
+}
+
+#track #end{
+	-fx-background-color:  #FF6600;
+	-fx-alignment: center;
+	-fx-font-size: 14pt;
+	-fx-font-weight: bold;
+	-fx-text-fill: #FFFFFF;
+	-fx-pref-width: 150px;
+}
+
+.button{
+	-fx-background-color: #FF6600;
+	-fx-pref-height: 50px;
+	-fx-pref-width: 100px;
+	-fx-background-radius: 90px;
+	-fx-font-weight: bold;
+	-fx-font-size: 14pt;
+}
